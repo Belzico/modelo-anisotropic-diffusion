@@ -1,6 +1,9 @@
+from ast import arg
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+
+from os import remove, scandir
 
 from AnisoDiffusion.proccess import *
 from AnisoDiffusion.images import read_image, save_image
@@ -41,6 +44,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.SaveAction()
         if triggered.text() == 'Remove Image':
             self.RemoveAction()
+        if triggered.text() == 'Exit':
+            self.clearTemp()
+            self.close()
 
     def LoadImageAction(self):
         path, filter = QFileDialog.getOpenFileName(self, directory='../img', caption='Load Image', filter='Image File (*.jpg  *.png)')
@@ -94,3 +100,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         parent = self.imageParent[name]
         if name == parent: return (parent, f'{parent}_edge', '')
         else: return (parent, f'{parent}_edge', f'{name}_diff')
+
+    def closeEvent(self, even):
+        self.clearTemp()
+        return super().closeEvent(even)
+
+    def clearTemp(self):
+        for x in [arch.name for arch in scandir('.temp') if arch.is_file()]:
+            remove(f'.temp/{x}')
