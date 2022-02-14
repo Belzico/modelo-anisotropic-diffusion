@@ -1,4 +1,3 @@
-from ast import arg
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -58,7 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not param.value : return
         param = (param.t, param.updb, param.updf, param.num_seg, param.sigma, param.coeff, param.edge)
 
-        start_new_thread(proccess_image, (param, path, self))
+        start_new_thread(proccess_image, (param, path, self))        
 
     def LoadImage(self, name):
         self.imgView_1.setPixmap(QPixmap(f'.temp/{name}.jpg'))
@@ -87,7 +86,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         save_image(image_diff, tup[2], path)
     
     def RemoveAction(self):
-        name = self.treeWidget.currentItem().text(0)
+        try:
+            name = self.treeWidget.currentItem().text(0)
+        except:
+            return
         parent = self.imageParent[name]
 
         if name == parent:

@@ -7,7 +7,6 @@ from AnisoDiffusion.images import get_name, read_image, save_image, edge_image
 def proccess_image(param, path, self):
     
     name = get_name(path)
-    self.LoadImage(name)
     
     i = 0
     while name in self.imageList:
@@ -22,6 +21,7 @@ def proccess_image(param, path, self):
     
     save_image(image, name)
     save_image(image_edge, f'{name}_edge')
+    self.LoadImage(name)
     
     imageGauss = gaussian(image, sigma=param[-3])
     ad_step_time_slic(imageGauss, name, param, self)
