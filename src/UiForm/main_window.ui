@@ -10,6 +10,12 @@
     <height>744</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>744</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Malik-Images</string>
   </property>
@@ -122,22 +128,62 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_the_Authors"/>
+    <addaction name="actionAbout_the_App"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuOptions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLoad_Image">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/blue-folder-horizontal-open.png</normaloff>../../icons/blue-folder-horizontal-open.png</iconset>
+   </property>
    <property name="text">
     <string>Load Image</string>
    </property>
+   <property name="statusTip">
+    <string>Load New Image...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionRemove_Image">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/cross-circle.png</normaloff>../../icons/cross-circle.png</iconset>
+   </property>
    <property name="text">
     <string>Remove Image</string>
    </property>
+   <property name="statusTip">
+    <string>Remove image...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/disk.png</normaloff>../../icons/disk.png</iconset>
+   </property>
    <property name="text">
     <string>Save Image</string>
+   </property>
+   <property name="statusTip">
+    <string>Save a selected image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSave_All_Images">
@@ -146,8 +192,45 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/if_logout_48698.png</normaloff>../../icons/if_logout_48698.png</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="statusTip">
+    <string>Close the program</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/question.png</normaloff>../../icons/question.png</iconset>
+   </property>
+   <property name="text">
+    <string>Help</string>
+   </property>
+  </action>
+  <action name="actionAbout_the_Authors">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/if_hire-me_48687.png</normaloff>../../icons/if_hire-me_48687.png</iconset>
+   </property>
+   <property name="text">
+    <string>About the Authors</string>
+   </property>
+  </action>
+  <action name="actionAbout_the_App">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/if_special-offer_48729.png</normaloff>../../icons/if_special-offer_48729.png</iconset>
+   </property>
+   <property name="text">
+    <string>About the App</string>
    </property>
   </action>
  </widget>
