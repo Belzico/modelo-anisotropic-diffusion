@@ -2,7 +2,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-from os import remove, scandir
+from os import remove, scandir, mkdir
 
 from AnisoDiffusion.proccess import *
 from AnisoDiffusion.images import read_image, save_image
@@ -10,13 +10,16 @@ from AnisoDiffusion.images import read_image, save_image
 from PyUi.main_window import Ui_MainWindow
 from PyForm.parameters import Parameters
 
-from _thread import start_new_thread
+from threading import Thread
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
-
+        
+        try: mkdir('.temp')
+        except: pass
+        
         self.first = True
         self.imageList = {}
         self.imageParent = {}
@@ -56,8 +59,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if not param.value : return
         param = (param.t, param.updb, param.updf, param.num_seg, param.sigma, param.coeff, param.edge)
-
-        start_new_thread(proccess_image, (param, path, self))        
+       
+        thread = Thread(target=proccess_image, args=(param, path, self))
+        thread.setDaemon(True)
+        thread.start()
 
     def LoadImage(self, name):
         self.imgView_1.setPixmap(QPixmap(f'.temp/{name}.jpg'))
