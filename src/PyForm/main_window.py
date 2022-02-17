@@ -11,6 +11,7 @@ from PyUi.main_window import Ui_MainWindow
 from PyForm.parameters import Parameters
 
 from threading import Thread
+from AnisoDiffusion.measure import quality_measures
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -196,6 +197,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.imgView_4.setPixmap(QPixmap(f'.temp/{self.name}_diff'))
             self.img_4_width = temp[0]
             self.img_4_height = temp[1]
+            
+            edge = read_image(f'.temp/{self.paren}_edge.jpg')
+            diff_edge = read_image(f'.temp/{self.name}_diff.jpg')
+            measure = quality_measures(edge, diff_edge)
+            self.groupBox_4.setStatusTip(f'AD-Edge Image --> (RMSE={str(measure[0])[:7]}, PSNR={str(measure[1])[:7]}, SNR={str(measure[2])[:7]})')
+        else:
+            self.groupBox_4.setStatusTip(f'AD-Edge Image')
         
         self.img_1_width =  self.img_2_width = self.img_3_width = temp[0]
         self.img_1_height = self.img_2_height =  self.img_3_height = temp[1]
