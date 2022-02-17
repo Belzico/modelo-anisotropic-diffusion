@@ -78,14 +78,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.showImage == 0:
             width = (self.width() - rest - 30)/2
             height = (self.height() - 74)/2
+            width1 = (self.width() - rest - 30)/2
+            height1 = (self.height() - 74)/2
         else:
             width = (self.width() - rest - 30)
             height = (self.height() - 74)
+            width1 = 0
+            height1 = 0
 
         self.groupBox_1.setGeometry(rest + 10, 10  , width, height)
-        self.groupBox_2.setGeometry(rest + width + 20, 10  , width, height)
-        self.groupBox_3.setGeometry(rest + 10, height + 10  , width, height)
-        self.groupBox_4.setGeometry(rest + width + 20, height + 10  , width, height)
+        self.groupBox_2.setGeometry(rest + width1 + 20, 10  , width, height)
+        self.groupBox_3.setGeometry(rest + 10, height1 + 10  , width, height)
+        self.groupBox_4.setGeometry(rest + width1 + 20, height1 + 10  , width, height)
 
         self.imgView_1.setGeometry(0, 16, width, height)
         self.scrollArea_1.setGeometry(0, 16, width, height-20)
