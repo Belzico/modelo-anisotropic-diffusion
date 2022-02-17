@@ -40,8 +40,6 @@ def ad_step_time_slic(image, name, param, self):
         self.imageParent[new_name] = name
         save_image(image_diff_edge, f'{new_name}_diff')
         self.imageList[new_name] = QTreeWidgetItem(self.imageList[name], [new_name])
-    
-    return image
 
 def segm_coef(dir, db, bf, num_seg, coef_type):
     if coef_type == 'Perona and Malik I':
