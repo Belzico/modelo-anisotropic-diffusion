@@ -17,7 +17,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Malik-Images</string>
+   <string>Anisotropic Diffusion</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../icons/logo_large.png</normaloff>../../icons/logo_large.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTreeWidget" name="treeWidget">
@@ -30,7 +34,7 @@
      </rect>
     </property>
     <property name="statusTip">
-     <string/>
+     <string>Image Tree</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::WinPanel</enum>
@@ -73,6 +77,9 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="statusTip">
+     <string>Normal Image</string>
+    </property>
     <property name="title">
      <string>Normal</string>
     </property>
@@ -84,6 +91,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Zoom Image</string>
      </property>
      <property name="text">
       <string/>
@@ -101,6 +111,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Minus Image</string>
      </property>
      <property name="text">
       <string/>
@@ -124,6 +137,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Show Image</string>
      </property>
      <property name="text">
       <string/>
@@ -213,6 +229,9 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="statusTip">
+     <string>Normal-2 Image</string>
+    </property>
     <property name="title">
      <string>Normal-2</string>
     </property>
@@ -224,6 +243,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Show Image</string>
      </property>
      <property name="text">
       <string/>
@@ -267,6 +289,9 @@
        <height>30</height>
       </rect>
      </property>
+     <property name="statusTip">
+      <string>Minus Image</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -283,6 +308,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Zoom Image</string>
      </property>
      <property name="text">
       <string/>
@@ -338,6 +366,9 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="statusTip">
+     <string>Edge Image</string>
+    </property>
     <property name="title">
      <string>Edge</string>
     </property>
@@ -369,6 +400,9 @@
        <height>30</height>
       </rect>
      </property>
+     <property name="statusTip">
+      <string>Show Image</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -392,6 +426,9 @@
        <height>30</height>
       </rect>
      </property>
+     <property name="statusTip">
+      <string>Minus Image</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -408,6 +445,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Zoom Image</string>
      </property>
      <property name="text">
       <string/>
@@ -463,6 +503,9 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="statusTip">
+     <string>AD-Edge Image</string>
+    </property>
     <property name="title">
      <string>AD-Edge</string>
     </property>
@@ -494,6 +537,9 @@
        <height>30</height>
       </rect>
      </property>
+     <property name="statusTip">
+      <string>Show Image</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -517,6 +563,9 @@
        <height>30</height>
       </rect>
      </property>
+     <property name="statusTip">
+      <string>Minus Image</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -533,6 +582,9 @@
        <width>30</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="statusTip">
+      <string>Zoom Image</string>
      </property>
      <property name="text">
       <string/>
@@ -692,6 +744,9 @@
    <property name="text">
     <string>Help</string>
    </property>
+   <property name="statusTip">
+    <string>Help</string>
+   </property>
   </action>
   <action name="actionAbout_the_Authors">
    <property name="icon">
@@ -699,6 +754,9 @@
      <normaloff>../../icons/if_hire-me_48687.png</normaloff>../../icons/if_hire-me_48687.png</iconset>
    </property>
    <property name="text">
+    <string>About the Authors</string>
+   </property>
+   <property name="statusTip">
     <string>About the Authors</string>
    </property>
   </action>
@@ -710,9 +768,15 @@
    <property name="text">
     <string>About the App</string>
    </property>
+   <property name="statusTip">
+    <string>About the App</string>
+   </property>
   </action>
   <action name="actionAnisotropic_Diffusion">
    <property name="text">
+    <string>Anisotropic Diffusion</string>
+   </property>
+   <property name="statusTip">
     <string>Anisotropic Diffusion</string>
    </property>
   </action>
@@ -725,6 +789,9 @@
    </property>
    <property name="text">
     <string>Image Tree</string>
+   </property>
+   <property name="statusTip">
+    <string>Hidde Image Tree</string>
    </property>
   </action>
  </widget>

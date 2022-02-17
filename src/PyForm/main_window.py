@@ -40,6 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imageParent = {}
 
         self.showImage = 0
+        self.countProcc = 0
 
         self.menuFile.triggered[QAction].connect(self.MenuFile)
         self.menuFilter.triggered[QAction].connect(self.MenuFilter)
@@ -202,21 +203,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.LoadImage()
         
     def SaveAction(self):
+        if self.name is None: return
         path = QFileDialog.getExistingDirectory(self, directory='../img/', caption='Save Image')
         
         if not path:return
         tup = self.GetSaveName()
         
         image = read_image(f'.temp/{tup[0]}.jpg')
-        image_edge = read_image(f'.temp/{tup[1]}.jpg')
-        image_diff = read_image(f'.temp/{tup[2]}.jpg')
+        try:
+            image_edge = read_image(f'.temp/{tup[1]}.jpg')
+            image_diff = read_image(f'.temp/{tup[2]}.jpg')
+        except:
+            pass
 
         save_image(image, tup[0], path)
-        save_image(image_edge, tup[1], path)
-        save_image(image_diff, tup[2], path)
+        try:
+            save_image(image_edge, tup[1], path)
+            save_image(image_diff, tup[2], path)
+        except:
+            pass
     
     def RemoveAction(self):
-        if self.name is None: return
+        if self.name is None or self.countProcc > 0: return
 
         if self.name == self.paren:
             self.treeWidget.invisibleRootItem().removeChild(self.imageList[self.name])
@@ -232,10 +240,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.paren = None
 
     def GetSaveName(self):
-        name = self.treeWidget.currentItem().text(0)
-        parent = self.imageParent[name]
-        if name == parent: return (parent, f'{parent}_edge', '')
-        else: return (parent, f'{parent}_edge', f'{name}_diff')
+        parent = self.imageParent[self.name]
+        if self.name == parent: return (parent, f'{parent}_edge', '')
+        else: return (parent, f'{parent}_edge', f'{self.name}_diff')
 
     def closeEvent(self, even):
         self.clearTemp()
