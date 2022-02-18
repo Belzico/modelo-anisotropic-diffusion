@@ -4,7 +4,7 @@ NAME 	   	:= Anisotropic Diffusion
 VERSION		:= 2.0
 DEVELOPERS	:= Reinaldo Barrera Travieso, Ariel Plasencia Díaz
 COPYRIGHT  	:= Copyright © 2021: $(DEVELOPERS)
-UI_FILES	:= main_window parameters present about_authors about_app
+UI_FILES	:= main_window parameters present about_authors about_app help
 
 compile:
 	for ui_file in $(UI_FILES); do pyuic5 -x ./UiForm/$${ui_file}.ui -o ./PyUi/$${ui_file}.py; done
