@@ -105,7 +105,7 @@ class Ui_Dialog(object):
         self.clusterSpin.setProperty("value", 8)
         self.clusterSpin.setObjectName("clusterSpin")
         self.coeffBox = QtWidgets.QComboBox(Dialog)
-        self.coeffBox.setGeometry(QtCore.QRect(490, 180, 161, 30))
+        self.coeffBox.setGeometry(QtCore.QRect(490, 180, 171, 30))
         self.coeffBox.setObjectName("coeffBox")
         self.coeffBox.addItem("")
         self.coeffBox.addItem("")
