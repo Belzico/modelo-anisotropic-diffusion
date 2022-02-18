@@ -1,19 +1,24 @@
+import webbrowser
+
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+from threading import Thread
 from os import remove, scandir, mkdir
 
 from AnisoDiffusion.proccess import *
+from AnisoDiffusion.measure import quality_measures
 from AnisoDiffusion.images import read_image, save_image, get_name
 
-from PyUi.main_window import Ui_MainWindow
+from PyUi.help import Ui_Help
+from PyUi.about_app import Ui_AboutApp
 from PyForm.parameters import Parameters
-
-from threading import Thread
-from AnisoDiffusion.measure import quality_measures
+from PyUi.main_window import Ui_MainWindow
+from PyUi.about_authors import Ui_AboutAuthors
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+    
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
@@ -47,6 +52,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.menuFilter.triggered[QAction].connect(self.MenuFilter)
         self.menuView.triggered[QAction].connect(self.MenuView)
         self.treeWidget.clicked.connect(self.SelectItemAction)
+        self.menuOptions.triggered[QAction].connect(self.MenuOptions)
 
         self.scrollArea_1.setWidget(self.imgView_1)
         self.scrollArea_2.setWidget(self.imgView_2)
@@ -116,6 +122,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.showImage_4.setGeometry(10, height - 55, 30, 30)
         self.plusImage_4.setGeometry(width - 50, 20, 30, 30)
         self.minusImage_4.setGeometry(width - 85, 20, 30, 30)
+
+    def MenuOptions(self, triggered):
+        if triggered.text() == 'Help':
+            self.HelpAction()
+        if triggered.text() == 'Orientation':
+            self.OrientationAction()
+        if triggered.text() == 'Report':
+            self.ReportAction()
+        if triggered.text() == 'About the Authors':
+            self.AboutAuthorsAction()
+        if triggered.text() == 'About the App':
+            self.AboutAppAction()
+
+    def HelpAction(self):
+        dialog = QDialog()
+        ui_dialog = Ui_Help()
+        ui_dialog.setupUi(dialog)
+        dialog.exec()
+
+    def OrientationAction(self):
+        path = '../doc/Bordes Imagenes Medicas.pdf'
+        webbrowser.open_new(path)
+
+    def ReportAction(self):
+        path = '../doc/Report.pdf'
+        webbrowser.open_new(path)
+
+    def AboutAuthorsAction(self):
+        dialog = QDialog()
+        ui_dialog = Ui_AboutAuthors()
+        ui_dialog.setupUi(dialog)
+        dialog.exec()
+
+    def AboutAppAction(self):
+        dialog = QDialog()
+        ui_dialog = Ui_AboutApp()
+        ui_dialog.setupUi(dialog)
+        dialog.exec()
 
     def MenuFile(self, triggered):
         if triggered.text() == 'Load Image':
