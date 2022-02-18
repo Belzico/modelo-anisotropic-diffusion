@@ -146,7 +146,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         webbrowser.open_new(path)
 
     def ReportAction(self):
-        path = '../doc/Report.pdf'
+        path = '../doc/Barrera-Plasencia-Leon Influencia del Suavizado por Difusion Anisotropica en Imagenes de Ultrasonido.pdf'
         webbrowser.open_new(path)
 
     def AboutAuthorsAction(self):
