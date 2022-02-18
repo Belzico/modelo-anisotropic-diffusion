@@ -1,5 +1,4 @@
 from PIL import Image
-from numpy import save
 from pylab import array, gray, imsave
 from skimage.feature import canny
 from skimage.filters.edges import scharr, sobel

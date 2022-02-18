@@ -30,16 +30,10 @@ clean: ## Remove temporary files
 	rm -rf Utils/__pycache__/
 
 install: ## Install the project dependencies
-	pip3 install json
 	pip3 install numpy
 	pip3 install PyQt5
 	pip3 install Pillow
-	pip3 install pathlib
-	pip3 install pylab-sdk
-	pip3 install python-time
-	pip3 install python-sympy
 	pip3 install python-scipy
-	pip3 install opencv-python
 	pip3 install python-skimage
 	pip3 install python-matplotlib
 
