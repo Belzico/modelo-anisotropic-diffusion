@@ -94,10 +94,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             width1 = 0
             height1 = 0
 
-        self.groupBox_1.setGeometry(rest + 10, 10  , width, height)
-        self.groupBox_2.setGeometry(rest + width1 + 20, 10  , width, height)
-        self.groupBox_3.setGeometry(rest + 10, height1 + 10  , width, height)
-        self.groupBox_4.setGeometry(rest + width1 + 20, height1 + 10  , width, height)
+        self.groupBox_1.setGeometry(rest + 10, 10, width, height)
+        self.groupBox_2.setGeometry(rest + width1 + 20, 10, width, height)
+        self.groupBox_3.setGeometry(rest + 10, height1 + 10, width, height)
+        self.groupBox_4.setGeometry(rest + width1 + 20, height1 + 10, width, height)
 
         self.imgView_1.setGeometry(0, 16, width, height)
         self.scrollArea_1.setGeometry(0, 16, width, height-20)
@@ -182,7 +182,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.resizeEvent(None)
 
     def LoadImageAction(self):
-        path, filter = QFileDialog.getOpenFileName(self, directory='../img', caption='Load Image', filter='Image File (*.jpg  *.png)')
+        path,_ = QFileDialog.getOpenFileName(self, directory='../img', caption='Load Image', filter='Image File (*.jpg  *.png)')
         if not path: return
 
         self.name = self.paren = get_name(path)
@@ -206,7 +206,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         param = Parameters()
         param.exec_()
 
-        if not param.value : return
+        if not param.value:
+            return
         param = (param.t, param.updb, param.updf, param.num_seg, param.sigma, param.coeff, param.edge)
 
         image = read_image(f'.temp/{self.name}.jpg')
