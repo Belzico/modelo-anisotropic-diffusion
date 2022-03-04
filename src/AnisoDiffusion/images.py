@@ -1,6 +1,9 @@
+import cv2
+import numpy as np
+
 from PIL import Image
-from pylab import array, gray, imsave
 from skimage.feature import canny
+from pylab import array, gray, imsave
 from skimage.filters.edges import scharr, sobel
 
 def get_name(path):
@@ -20,6 +23,9 @@ def edge_image(image, edge_type):
         edge = abs(scharr(image))
     elif edge_type == 'Canny':
         edge = abs(sobel(image))
+    elif edge_type == 'Laplace':
+        laplace = cv2.Laplacian(image, cv2.CV_64F)
+        edge = np.uint8(np.absolute(laplace))
     else:
         edge = canny(image, 0)
 

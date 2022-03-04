@@ -1,6 +1,6 @@
-from scipy.cluster.vq import whiten, kmeans
-from numpy import zeros, array
 from math import log
+from numpy import zeros, array
+from scipy.cluster.vq import whiten, kmeans
 
 def toArray(img):
     arrayPix = zeros((img.shape[0] * img.shape[1], 1))

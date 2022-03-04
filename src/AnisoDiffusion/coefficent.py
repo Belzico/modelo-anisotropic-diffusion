@@ -1,5 +1,6 @@
-from cmath import sqrt
 import collections
+
+from cmath import sqrt
 from pylab import zeros, exp, sqrt
 from AnisoDiffusion.kmmc import kmmc2
 from skimage.segmentation import slic
@@ -8,7 +9,7 @@ def in_range(x, y, img):
     return -1 < x < img.shape[0] and -1 < y < img.shape[1]
 
 def segm_coef_1(img, db=0.1, bf=0.05, num_seg=15):
-    labels = slic(img, num_seg ,multichannel=False)
+    labels = slic(img, num_seg, multichannel=False, start_label=1)
     matrix_coef = zeros(img.shape)
     process = zeros(img.shape, dtype=bool)
     extGlobals = kmmc2(img, onlyKm=True)
@@ -23,7 +24,7 @@ def segm_coef_1(img, db=0.1, bf=0.05, num_seg=15):
     return matrix_coef
 
 def segm_coef_2(img, db=0.1, bf=0.05, num_seg=15):
-    labels = slic(img, num_seg ,multichannel=False)
+    labels = slic(img, num_seg, multichannel=False, start_label=1)
     matrix_coef = zeros(img.shape)
     process = zeros(img.shape, dtype=bool)
     extGlobals = kmmc2(img, onlyKm=True)
@@ -39,7 +40,7 @@ def segm_coef_2(img, db=0.1, bf=0.05, num_seg=15):
     return matrix_coef
 
 def segm_coef_3(img, db=0.1, bf=0.05, num_seg=15):
-    labels = slic(img, num_seg ,multichannel=False)
+    labels = slic(img, num_seg, multichannel=False, start_label=1)
     matrix_coef = zeros(img.shape)
     process = zeros(img.shape, dtype=bool)
     extGlobals = kmmc2(img, onlyKm=True)
@@ -58,7 +59,7 @@ def segm_coef_3(img, db=0.1, bf=0.05, num_seg=15):
     return matrix_coef
 
 def segm_coef_4(img, db=0.1, bf=0.05, num_seg=15):
-    labels = slic(img, num_seg ,multichannel=False)
+    labels = slic(img, num_seg, multichannel=False, start_label=1)
     matrix_coef = zeros(img.shape)
     process = zeros(img.shape, dtype=bool)
     extGlobals = kmmc2(img, onlyKm=True)

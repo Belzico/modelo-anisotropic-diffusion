@@ -1,6 +1,6 @@
-from AnisoDiffusion.coefficent import segm_coef_1, segm_coef_2, segm_coef_3, segm_coef_4
-from AnisoDiffusion.images import edge_image, save_image
 from PyQt5.QtWidgets import QTreeWidgetItem
+from AnisoDiffusion.images import edge_image, save_image
+from AnisoDiffusion.coefficent import segm_coef_1, segm_coef_2, segm_coef_3, segm_coef_4
 
 def derivate(direction, image):
     res = image.copy()
