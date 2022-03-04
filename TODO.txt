@@ -1,0 +1,4 @@
+1. Cuando las imagenes se carguen que sus dimensiones sean proporcionales al groupbox
+2. Agregar la deteccion de bordes mediante Laplace (ya lo hice)
+3. Ocultar algunas opciones hasta que se carguen las imagenes
+4. En el cuadro de arriba derecha que salga la imagen aplicando la difusion anisotropica, pero sin la deteccion de bordes
