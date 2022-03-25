@@ -1,6 +1,6 @@
 from PyUi.present import Ui_Present
-from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtWidgets import QDialog
 
 class Present(QDialog, Ui_Present):
     def __init__(self):
@@ -19,7 +19,7 @@ class Present(QDialog, Ui_Present):
         self.timer.start(self.maxvalue)
 
     def update_func(self):
-        self.step += 1
+        self.step += 2
         self.progressBar.setValue(self.step)
 
         if self.step > self.maxvalue:
