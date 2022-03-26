@@ -53,4 +53,3 @@ def quality_measures(img_org, img_res):
     snr = mean_pixR/standar_der
 
     return (rmse, psnr, snr)
-

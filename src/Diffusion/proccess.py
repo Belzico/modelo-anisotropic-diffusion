@@ -1,6 +1,6 @@
 from skimage.filters import gaussian
-from AnisoDiffusion.difussion import ad_step_time_slic
-from AnisoDiffusion.images import save_image, edge_image
+from Diffusion.difussion import ad_step_time_slic
+from Diffusion.images import save_image, edge_image
 
 def proccess_image(image, param, self):
     self.countProcc += 1

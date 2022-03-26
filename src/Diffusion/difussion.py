@@ -1,6 +1,6 @@
+from Diffusion.coefficent import *
 from PyQt5.QtWidgets import QTreeWidgetItem
-from AnisoDiffusion.images import edge_image, save_image
-from AnisoDiffusion.coefficent import segm_coef_1, segm_coef_2, segm_coef_3, segm_coef_4
+from Diffusion.images import edge_image, save_image
 
 def derivate(direction, image):
     res = image.copy()
@@ -39,6 +39,7 @@ def ad_step_time_slic(image, name, param, self):
         new_name = f'{name}_{i+1}'
         self.imageParent[new_name] = name
         save_image(image_diff_edge, f'{new_name}_diff')
+        save_image(image_diff_edge, f'{new_name}_edge_diff')
         self.imageList[new_name] = QTreeWidgetItem(self.imageList[name], [new_name])
 
 def segm_coef(dir, db, bf, num_seg, coef_type):

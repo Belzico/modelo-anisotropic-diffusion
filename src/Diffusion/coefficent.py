@@ -1,8 +1,8 @@
 import collections
 
 from cmath import sqrt
+from Diffusion.kmmc import kmmc2
 from pylab import zeros, exp, sqrt
-from AnisoDiffusion.kmmc import kmmc2
 from skimage.segmentation import slic
 
 def in_range(x, y, img):
