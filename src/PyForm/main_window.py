@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import *
 from threading import Thread
 from os import remove, scandir, mkdir
 
-from AnisoDiffusion.proccess import *
-from AnisoDiffusion.measure import quality_measures
-from AnisoDiffusion.images import read_image, save_image, get_name
+from Diffusion.proccess import *
+from Diffusion.measure import quality_measures
+from Diffusion.images import read_image, save_image, get_name
 
 from PyUi.help import Ui_Help
 from PyUi.about_app import Ui_AboutApp
@@ -18,16 +18,18 @@ from PyUi.main_window import Ui_MainWindow
 from PyUi.about_authors import Ui_AboutAuthors
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    
+
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
         
-        try: mkdir('.temp')
-        except: pass
+        try:
+            mkdir('.temp')
+        except:
+            pass
         
         self.name = None
-        self.paren = None
+        self.parent = None
         
         self.img_1_width = 0
         self.img_1_height = 0
@@ -77,6 +79,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.statBar = QStatusBar()
         self.setStatusBar(self.statBar)
         self.imgView_2.setFrameShape(QFrame.WinPanel)
+        self.SetEnable(False)
 
     def resizeEvent(self, event):
         rest = 310 if self.actionImages_Tree.isChecked() else 0
@@ -84,10 +87,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.treeWidget.setGeometry(10, 10, rest - 10, self.height() - 74)
         
         if self.showImage == 0:
-            width = (self.width() - rest - 30)/2
-            height = (self.height() - 74)/2
-            width1 = (self.width() - rest - 30)/2
-            height1 = (self.height() - 74)/2
+            width = (self.width() - rest - 30) / 2
+            height = (self.height() - 74) / 2
+            width1 = (self.width() - rest - 30) / 2
+            height1 = (self.height() - 74) / 2
         else:
             width = (self.width() - rest - 30)
             height = (self.height() - 74)
@@ -174,8 +177,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def MenuFilter(self, triggered):
         if triggered.text() == 'Anisotropic Diffusion':
-            self.AnisoDiff()
-        
+            self.AnisotropicDiffusion()
+
     def MenuView(self, triggered):
         if triggered.text() == 'Image Tree':
             self.treeWidget.setHidden(not self.actionImages_Tree.isChecked())
@@ -183,11 +186,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def LoadImageAction(self):
         path,_ = QFileDialog.getOpenFileName(self, directory='../img', caption='Load Image', filter='Image File (*.jpg  *.png)')
-        if not path: return
+        if not path:
+            return
 
-        self.name = self.paren = get_name(path)
+        self.name = self.parent = get_name(path)
         
-        if self.name in self.imageList: return
+        if self.name in self.imageList:
+            return
         
         self.imageParent[self.name] = self.name
         self.imageList[self.name] = QTreeWidgetItem(self.treeWidget, [self.name])
@@ -195,14 +200,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         image = read_image(path)
         save_image(image, self.name)
 
-        self.img_1_height = self.img_2_height = self.img_3_height = self.img_4_height = len(image)
-        self.img_1_width = self.img_2_width = self.img_3_width = self.img_4_width = len(image[0])
+        self.img_1_height = self.img_2_height = self.img_3_height = self.img_4_height = self.imgView_1.height()
+        self.img_1_width = self.img_2_width = self.img_3_width = self.img_4_width = self.imgView_1.width()
 
         self.imageSize[self.name] = (self.img_1_width, self.img_1_height)
         
-        self.LoadImage()
+        self.ClearImage()
+        self.imgView_1.setPixmap(QPixmap(f'.temp/{self.parent}').scaled(self.img_1_width, self.img_1_height, Qt.KeepAspectRatio))
+        self.SetEnable(True)
 
-    def AnisoDiff(self):
+    def AnisotropicDiffusion(self):
         param = Parameters()
         param.exec_()
 
@@ -216,12 +223,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.setDaemon(True)
         thread.start()
 
-    def LoadImage(self):
-        self.imgView_1.setPixmap(QPixmap(f'.temp/{self.paren}'))
-        self.imgView_2.setPixmap(QPixmap(f'.temp/{self.paren}'))
-        self.imgView_3.setPixmap(QPixmap(f'.temp/{self.paren}_edge'))
-        self.imgView_4.setPixmap(QPixmap(f'.temp/{self.name}_diff'))
-    
     def ClearImage(self):
         self.imgView_1.setPixmap(QPixmap(f''))
         self.imgView_2.setPixmap(QPixmap(f''))
@@ -230,36 +231,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def SelectItemAction(self):
         self.name = self.treeWidget.currentItem().text(0)
-        self.paren = self.imageParent[self.name]
-        
-        self.imgView_1.setPixmap(QPixmap(f'.temp/{self.name}'))
-        self.imgView_2.setPixmap(QPixmap(f'.temp/{self.name}'))
-        self.imgView_3.setPixmap(QPixmap(f'.temp/{self.name}_edge'))
+        self.parent = self.imageParent[self.name]
 
-        temp = self.imageSize[self.paren]
+        self.ClearImage()
+        temp = self.imageSize[self.parent]
+        self.img_1_width = temp[0]
+        self.img_1_height = temp[1]
         
-        if self.name != self.paren:     
-            self.imgView_4.setPixmap(QPixmap(f'.temp/{self.name}_diff'))
-            self.img_4_width = temp[0]
-            self.img_4_height = temp[1]
+        self.imgView_1.setPixmap(QPixmap(f'.temp/{self.parent}').scaled(self.img_1_width, self.img_1_height, Qt.KeepAspectRatio))
+        
+        if self.name != self.parent:     
+            self.img_4_width = self.img_2_width = self.img_3_width = temp[0]
+            self.img_4_height = self.img_2_height =  self.img_3_height = temp[1]
+            self.imgView_2.setPixmap(QPixmap(f'.temp/{self.name}_diff').scaled(self.img_2_width, self.img_2_height, Qt.KeepAspectRatio))
+            self.imgView_3.setPixmap(QPixmap(f'.temp/{self.parent}_edge').scaled(self.img_3_width, self.img_3_height, Qt.KeepAspectRatio))
+            self.imgView_4.setPixmap(QPixmap(f'.temp/{self.name}_edge_diff').scaled(self.img_4_width, self.img_4_height, Qt.KeepAspectRatio))
             
-            edge = read_image(f'.temp/{self.paren}_edge.jpg')
-            diff_edge = read_image(f'.temp/{self.name}_diff.jpg')
+            edge = read_image(f'.temp/{self.parent}_edge.jpg')
+            diff_edge = read_image(f'.temp/{self.name}_edge_diff.jpg')
             measure = quality_measures(edge, diff_edge)
             self.groupBox_4.setStatusTip(f'AD-Edge Image --> (RMSE={str(measure[0])[:7]}, PSNR={str(measure[1])[:7]}, SNR={str(measure[2])[:7]})')
         else:
             self.groupBox_4.setStatusTip(f'AD-Edge Image')
         
-        self.img_1_width =  self.img_2_width = self.img_3_width = temp[0]
-        self.img_1_height = self.img_2_height =  self.img_3_height = temp[1]
-        
-        self.LoadImage()
-        
     def SaveAction(self):
-        if self.name is None: return
+        if self.name is None:
+            return
         path = QFileDialog.getExistingDirectory(self, directory='../img/', caption='Save Image')
         
-        if not path:return
+        if not path:
+            return
         tup = self.GetSaveName()
         
         image = read_image(f'.temp/{tup[0]}.jpg')
@@ -275,27 +276,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             save_image(image_diff, tup[2], path)
         except:
             pass
-    
-    def RemoveAction(self):
-        if self.name is None or self.countProcc > 0: return
 
-        if self.name == self.paren:
+    def RemoveAction(self):
+        if self.name is None or self.countProcc > 0:
+            return
+
+        if self.name == self.parent:
             self.treeWidget.invisibleRootItem().removeChild(self.imageList[self.name])
             self.ClearImage()
+            self.SetEnable(False)
         else:
-            self.imageList[self.paren].removeChild(self.imageList[self.name])
-            self.imgView_4.setPixmap(QPixmap(f''))
+            self.imageList[self.parent].removeChild(self.imageList[self.name])
+            # self.imgView_3.setPixmap(QPixmap(f''))
+            # self.imgView_4.setPixmap(QPixmap(f''))
         
         self.imageList.pop(self.name)
         self.imageParent.pop(self.name)
         
         self.name = None
-        self.paren = None
+        self.parent = None
 
     def GetSaveName(self):
         parent = self.imageParent[self.name]
-        if self.name == parent: return (parent, f'{parent}_edge', '')
-        else: return (parent, f'{parent}_edge', f'{self.name}_diff')
+        if self.name == parent:
+            return (parent, f'{parent}_edge', '')
+        else:
+            return (parent, f'{parent}_edge', f'{self.name}_diff')
 
     def closeEvent(self, even):
         self.clearTemp()
@@ -306,9 +312,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             remove(f'.temp/{x}')
 
     def MinusImage_1(self):
-        if self.img_1_width - 100 <= 0 or self.name is None: return
+        if self.img_1_height == 0 or self.img_1_width == 0 or self.img_1_width - 100 <= 0 or self.name is None:
+            return
 
-        bixmap = QPixmap(f'.temp/{self.paren}')
+        bixmap = QPixmap(f'.temp/{self.parent}')
         
         self.img_1_width -= 100
         self.img_1_height -= 100
@@ -316,9 +323,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_1.setPixmap(bixmap.scaled(self.img_1_width, self.img_1_height, Qt.KeepAspectRatio)) 
     
     def MinusImage_2(self):
-        if self.img_2_width - 100 <= 0 or self.name is None: return
+        if self.img_2_height == 0 or self.img_2_width == 0 or self.img_2_width - 100 <= 0 or self.name is None:
+            return
 
-        bixmap = QPixmap(f'.temp/{self.paren}')
+        bixmap = QPixmap(f'.temp/{self.parent}')
         
         self.img_2_width -= 100
         self.img_2_height -= 100
@@ -326,17 +334,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_2.setPixmap(bixmap.scaled(self.img_2_width, self.img_2_height, Qt.KeepAspectRatio))
     
     def MinusImage_3(self):
-        if self.img_3_width - 100 <= 0 or self.name is None: return
+        if self.img_3_height == 0 or self.img_3_width == 0 or self.img_3_width - 100 <= 0 or self.name is None:
+            return
 
-        bixmap = QPixmap(f'.temp/{self.paren}_edge')
+        bixmap = QPixmap(f'.temp/{self.parent}_edge')
         
         self.img_3_width -= 100
         self.img_3_height -= 100
 
         self.imgView_3.setPixmap(bixmap.scaled(self.img_3_width, self.img_3_height, Qt.KeepAspectRatio))
-    
+
     def MinusImage_4(self):
-        if self.img_4_width - 100 <= 0 or self.name is None: return
+        if self.img_4_height == 0 or self.img_4_width == 0 or self.img_4_width - 100 <= 0 or self.name is None:
+            return
 
         bixmap = QPixmap(f'.temp/{self.name}_diff')
         
@@ -344,11 +354,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.img_4_height -= 100
 
         self.imgView_4.setPixmap(bixmap.scaled(self.img_4_width, self.img_4_height, Qt.KeepAspectRatio)) 
-    
-    def PlusImage_1(self):
-        if self.img_1_width + 100 >= 10000 or self.name is None: return
 
-        bixmap = QPixmap(f'.temp/{self.paren}')
+    def PlusImage_1(self):
+        if self.img_1_height == 0 or self.img_1_width == 0 or self.img_1_width + 100 >= 10000 or self.name is None:
+            return
+
+        bixmap = QPixmap(f'.temp/{self.parent}')
         
         self.img_1_width += 100
         self.img_1_height += 100
@@ -356,9 +367,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_1.setPixmap(bixmap.scaled(self.img_1_width, self.img_1_height, Qt.KeepAspectRatio))
 
     def PlusImage_2(self):
-        if self.img_2_width + 100 >= 10000 or self.name is None: return
+        if self.img_2_height == 0 or self.img_2_width == 0 or self.img_2_width + 100 >= 10000 or self.name is None:
+            return
 
-        bixmap = QPixmap(f'.temp/{self.paren}')
+        bixmap = QPixmap(f'.temp/{self.parent}')
         
         self.img_2_width += 100
         self.img_2_height += 100
@@ -366,9 +378,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_2.setPixmap(bixmap.scaled(self.img_2_width, self.img_2_height, Qt.KeepAspectRatio))
 
     def PlusImage_3(self):
-        if self.img_3_width + 100 >= 10000 or self.name is None: return
+        if self.img_3_height == 0 or self.img_3_width == 0 or self.img_3_width + 100 >= 10000 or self.name is None:
+            return
 
-        bixmap = QPixmap(f'.temp/{self.paren}_edge')
+        bixmap = QPixmap(f'.temp/{self.parent}_edge')
         
         self.img_3_width += 100
         self.img_3_height += 100
@@ -376,7 +389,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_3.setPixmap(bixmap.scaled(self.img_3_width, self.img_3_height, Qt.KeepAspectRatio))
 
     def PlusImage_4(self):
-        if self.img_4_width + 100 >= 10000 or self.name is None: return
+        if self.img_4_height == 0 or self.img_4_width == 0 or self.img_4_width + 100 >= 10000 or self.name is None:
+            return
 
         bixmap = QPixmap(f'.temp/{self.name}_diff')
         
@@ -386,12 +400,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_4.setPixmap(bixmap.scaled(self.img_4_width, self.img_4_height, Qt.KeepAspectRatio))  
 
     def ShowImage_1(self):
-        #if self.name is None: return
         if self.showImage == 0:
             self.showImage = 1
             self.Hidden(1, True)
             self.showImage_1.setIcon(QIcon('../icons/hide.png'))
-        
         elif self.showImage == 1:
             self.showImage = 0
             self.Hidden(1, False)
@@ -399,12 +411,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.resizeEvent(None)
     
     def ShowImage_2(self):
-        #if self.name is None: return
         if self.showImage == 0:
             self.showImage = 2
             self.Hidden(2, True)
             self.showImage_2.setIcon(QIcon('../icons/hide.png'))
-        
         elif self.showImage == 2:
             self.showImage = 0
             self.Hidden(2, False)
@@ -412,12 +422,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.resizeEvent(None)
     
     def ShowImage_3(self):
-        #if self.name is None: return
         if self.showImage == 0:
             self.showImage = 3
             self.Hidden(3, True)
             self.showImage_3.setIcon(QIcon('../icons/hide.png'))
-        
         elif self.showImage == 3:
             self.showImage = 0
             self.Hidden(3, False)
@@ -425,12 +433,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.resizeEvent(None)
     
     def ShowImage_4(self):
-        #if self.name is None: return
         if self.showImage == 0:
             self.showImage = 4
             self.Hidden(4, True)
             self.showImage_4.setIcon(QIcon('../icons/hide.png'))
-        
         elif self.showImage == 4:
             self.showImage = 0
             self.Hidden(4, False)
@@ -462,3 +468,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.plusImage_4.setHidden(val)
             self.showImage_4.setHidden(val)
             self.minusImage_4.setHidden(val)
+
+    def SetEnable(self, boolean):
+        self.actionSave.setEnabled(boolean)
+        self.actionRemove_Image.setEnabled(boolean)
+        self.actionAnisotropic_Diffusion.setEnabled(boolean)
