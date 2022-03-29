@@ -21,7 +21,7 @@ version: ## Show the project version
 	@echo "$(NAME) v$(VERSION)"
 
 clean: ## Remove temporary files
-	rm -rf AnisoDiffusion/__pycache__/
+	rm -rf Diffusion/__pycache__/
 	rm -rf PyForm/__pycache__/
 	rm -rf PyUi/__pycache__/
 	rm -rf qdarkstyle/__pycache__/
