@@ -288,6 +288,11 @@ class Ui_MainWindow(object):
         icon13.addPixmap(QtGui.QPixmap("./UiForm/../../icons/printer.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionReport.setIcon(icon13)
         self.actionReport.setObjectName("actionReport")
+        self.actionView_GIF = QtWidgets.QAction(MainWindow)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap("./UiForm/../../icons/application-image.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionView_GIF.setIcon(icon14)
+        self.actionView_GIF.setObjectName("actionView_GIF")
         self.menuFile.addAction(self.actionLoad_Image)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionRemove_Image)
@@ -303,6 +308,7 @@ class Ui_MainWindow(object):
         self.menuOptions.addAction(self.actionAbout_the_Authors)
         self.menuOptions.addAction(self.actionAbout_the_App)
         self.menuFilter.addAction(self.actionAnisotropic_Diffusion)
+        self.menuFilter.addAction(self.actionView_GIF)
         self.menuView.addAction(self.actionImages_Tree)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFilter.menuAction())
@@ -372,6 +378,8 @@ class Ui_MainWindow(object):
         self.actionOrientation.setShortcut(_translate("MainWindow", "F5"))
         self.actionReport.setText(_translate("MainWindow", "Report"))
         self.actionReport.setShortcut(_translate("MainWindow", "F6"))
+        self.actionView_GIF.setText(_translate("MainWindow", "View GIF"))
+        self.actionView_GIF.setShortcut(_translate("MainWindow", "Ctrl+V"))
 
 
 if __name__ == "__main__":

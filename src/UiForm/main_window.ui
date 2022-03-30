@@ -662,6 +662,7 @@
      <string>Fil&amp;ter</string>
     </property>
     <addaction name="actionAnisotropic_Diffusion"/>
+    <addaction name="actionView_GIF"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -839,6 +840,18 @@
    </property>
    <property name="shortcut">
     <string>F6</string>
+   </property>
+  </action>
+  <action name="actionView_GIF">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../icons/application-image.png</normaloff>../../icons/application-image.png</iconset>
+   </property>
+   <property name="text">
+    <string>View GIF</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>
