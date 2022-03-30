@@ -1,3 +1,4 @@
+import imageio
 import webbrowser
 
 from PyQt5.QtGui import *
@@ -30,6 +31,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         self.name = None
         self.parent = None
+        self.iterations = None
         
         self.img_1_width = 0
         self.img_1_height = 0
@@ -178,6 +180,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def MenuFilter(self, triggered):
         if triggered.text() == 'Anisotropic Diffusion':
             self.AnisotropicDiffusion()
+        if triggered.text() == 'View GIF':
+            self.CreateGif()
+
+    def CreateGif(self):
+        frames = []
+
+        for i in range(1, self.iterations + 1):
+            image_path = f'.temp/{self.name}_{i}_edge_diff.jpg'
+            frames.append(imageio.imread(image_path))
+        
+        imageio.mimsave(f'.temp/{self.name}.gif', frames, 'GIF', duration=0.5)
 
     def MenuView(self, triggered):
         if triggered.text() == 'Image Tree':
@@ -216,6 +229,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not param.value:
             return
         param = (param.t, param.updb, param.updf, param.num_seg, param.sigma, param.coeff, param.edge)
+        self.iterations = param[0]
 
         image = read_image(f'.temp/{self.name}.jpg')
        
@@ -473,3 +487,4 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionSave.setEnabled(boolean)
         self.actionRemove_Image.setEnabled(boolean)
         self.actionAnisotropic_Diffusion.setEnabled(boolean)
+        self.actionView_GIF.setEnabled(boolean)
