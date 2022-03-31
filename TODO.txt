@@ -1,4 +1,11 @@
-1. Cuando las imagenes se carguen que sus dimensiones sean proporcionales al groupbox
-2. Agregar la deteccion de bordes mediante Laplace (ya lo hice)
-3. Ocultar algunas opciones hasta que se carguen las imagenes
-4. En el cuadro de arriba derecha que salga la imagen aplicando la difusion anisotropica, pero sin la deteccion de bordes
+1. Cuando las imagenes se carguen que sus dimensiones sean proporcionales al groupbox (ya)
+2. Agregar la deteccion de bordes mediante Laplace (ya)
+3. Ocultar algunas opciones hasta que se carguen las imagenes (ya)
+4. En el cuadro de arriba derecha que salga la imagen aplicando la difusion anisotropica, pero sin la deteccion de bordes (ya)
+7. Cuando se borra una subimagen que se carguen todas (se estan cargando las dos de arriba) (ya)
+
+
+5. Cuando se pongan grande las imagenes que se ajuste su tamano tambien
+6. Cuando se pongan chicas las imagenes que se ajuste su tamano tambien
+8. Agregar notificaciones
+9. Agregar el video donde se muestran todas las iteraciones
