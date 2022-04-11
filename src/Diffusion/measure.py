@@ -1,4 +1,4 @@
-from pylab import log10, inf, mean
+from numpy import log10, inf, mean
 
 def RMSE(img_org, img_res):
     rmse = 0
