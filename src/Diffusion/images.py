@@ -3,14 +3,14 @@ import numpy as np
 
 from PIL import Image
 from skimage.feature import canny
-from pylab import array, gray, imsave
+from matplotlib.pyplot import gray, imsave
 from skimage.filters.edges import scharr, sobel
 
 def get_name(path):
     return path.split('/')[-1][:-4]
 
 def read_image(path):
-    img = array(Image.open(path).convert('L'), dtype='float64')
+    img = np.array(Image.open(path).convert('L'), dtype='float64')
     gray()
     return img
 
