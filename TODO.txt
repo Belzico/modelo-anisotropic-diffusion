@@ -9,3 +9,4 @@
 6. Cuando se pongan chicas las imagenes que se ajuste su tamano tambien
 8. Agregar notificaciones
 9. Agregar el video donde se muestran todas las iteraciones
+10. Arreglar GIF (se parte cuando tratas de hacer GIF en una foto de la iteracion)
