@@ -6,7 +6,7 @@ def RMSE(img_org, img_res):
     n = img_org.shape[1]
     for x in range(0, img_org.shape[0]):
         for y in range(0, img_org.shape[1]):
-             rmse += (img_org[x, y] - img_res[x, y])**2
+            rmse += (img_org[x, y] - img_res[x, y])**2
 
     return rmse/(m*n)
 

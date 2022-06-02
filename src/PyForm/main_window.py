@@ -86,7 +86,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def resizeEvent(self, event):
         rest = 310 if self.actionImages_Tree.isChecked() else 0
 
-        self.treeWidget.setGeometry(10, 10, rest - 10, self.height() - 74)
+        self.treeWidget.setGeometry(10, 10, int(rest - 10), int(self.height() - 74))
         
         if self.showImage == 0:
             width = (self.width() - rest - 30) / 2
@@ -98,17 +98,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             height = (self.height() - 74)
             width1 = 0
             height1 = 0
+            
+        #jj fix    
+        width=int(width)
+        height=int(height)
+        width1=int(width1)
+        height1=int(height1)
+        #.....
+        
+        self.groupBox_1.setGeometry(int(rest + 10), 10, int(width), int(height))
+        self.groupBox_2.setGeometry(int(rest + width1 + 20), 10, int(width), int(height))
+        self.groupBox_3.setGeometry(int(rest + 10), int(height1 + 10), int(width), int(height))
+        self.groupBox_4.setGeometry(int(rest + width1 + 20), int(height1 + 10), int(width), int(height))
 
-        self.groupBox_1.setGeometry(rest + 10, 10, width, height)
-        self.groupBox_2.setGeometry(rest + width1 + 20, 10, width, height)
-        self.groupBox_3.setGeometry(rest + 10, height1 + 10, width, height)
-        self.groupBox_4.setGeometry(rest + width1 + 20, height1 + 10, width, height)
-
-        self.imgView_1.setGeometry(0, 16, width, height)
-        self.scrollArea_1.setGeometry(0, 16, width, height-20)
-        self.showImage_1.setGeometry(10, height - 55, 30, 30)
-        self.plusImage_1.setGeometry(width - 50, 20, 30, 30)
-        self.minusImage_1.setGeometry(width - 85, 20, 30, 30)
+        self.imgView_1.setGeometry(0, 16, int(width), int(height))
+        self.scrollArea_1.setGeometry(0, 16, int(width), int(height-20))
+        self.showImage_1.setGeometry(10, int(height - 55), 30, 30)
+        self.plusImage_1.setGeometry(int(width) - 50, 20, 30, 30)
+        self.minusImage_1.setGeometry(int(width - 85), 20, 30, 30)
         
         self.imgView_2.setGeometry(0, 16, width, height)
         self.scrollArea_2.setGeometry(0, 16, width, height-20)
@@ -222,6 +229,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imgView_1.setPixmap(QPixmap(f'.temp/{self.parent}').scaled(self.img_1_width, self.img_1_height, Qt.KeepAspectRatio))
         self.SetEnable(True)
 
+    #ffffffffffffffffffffffffffffffffffffff
     def AnisotropicDiffusion(self):
         param = Parameters()
         param.exec_()
@@ -232,7 +240,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iterations = param[0]
 
         image = read_image(f'.temp/{self.name}.jpg')
-       
+    
         thread = Thread(target=proccess_image, args=(image, param, self))
         thread.setDaemon(True)
         thread.start()
