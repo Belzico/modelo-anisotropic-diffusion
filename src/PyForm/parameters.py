@@ -1,5 +1,6 @@
 from PyUi.parameters import *
 from PyQt5.QtWidgets import *
+import docReader
 
 class Parameters(QDialog, Ui_Dialog):
     def __init__(self):
@@ -27,3 +28,15 @@ class Parameters(QDialog, Ui_Dialog):
         self.updf = float(self.updfSpin.text())
         self.sigma = int(self.sigmaSpin.text())
         self.num_seg = int(self.clusterSpin.text())
+        print('a')
+        
+    def defaultParams(self):
+        self.t = 10
+        self.updb = 0.17650
+        self.updf = 0.01790
+        self.sigma = 1
+        self.num_seg = 8
+
+        self.edge = 'Scharr'
+        self.coeff = "Perona and Malik II"
+        self.value = True

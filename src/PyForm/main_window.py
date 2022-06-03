@@ -18,11 +18,16 @@ from PyForm.parameters import Parameters
 from PyUi.main_window import Ui_MainWindow
 from PyUi.about_authors import Ui_AboutAuthors
 
+
+
 class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
+        
+        #mine JJ
+        self.picturesList=None
         
         try:
             mkdir('.temp')
@@ -232,18 +237,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #ffffffffffffffffffffffffffffffffffffff
     def AnisotropicDiffusion(self):
         param = Parameters()
-        param.exec_()
+        param.defaultParams()
 
         if not param.value:
             return
+        
         param = (param.t, param.updb, param.updf, param.num_seg, param.sigma, param.coeff, param.edge)
         self.iterations = param[0]
 
-        image = read_image(f'.temp/{self.name}.jpg')
-    
-        thread = Thread(target=proccess_image, args=(image, param, self))
-        thread.setDaemon(True)
-        thread.start()
+        for image in self.picturesList:
+            thread = Thread(target=proccess_image, args=(image, param, self))
+            thread.setDaemon(True)
+            thread.start()
 
     def ClearImage(self):
         self.imgView_1.setPixmap(QPixmap(f''))
