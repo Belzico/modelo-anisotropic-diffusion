@@ -15,6 +15,13 @@ def read_image(path):
     return img
 
 def save_image(image, name, path='./.temp'):
+    try:
+        if Path('path').exists():
+            file = open('im-not-here.txt')
+    except:
+        pass
+    
+    
     gray()
     imsave(f'{path}/{name}.jpg', image)
 

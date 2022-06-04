@@ -1,6 +1,5 @@
 from PyUi.parameters import *
 from PyQt5.QtWidgets import *
-import docReader
 
 class Parameters(QDialog, Ui_Dialog):
     def __init__(self):
