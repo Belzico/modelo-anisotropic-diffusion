@@ -292,14 +292,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         image = read_image(f'.temp/{tup[0]}.jpg')
         try:
-            image_edge = read_image(f'.temp/{tup[1]}.jpg')
+            #image_edge = read_image(f'.temp/{tup[1]}.jpg')
             image_diff = read_image(f'.temp/{tup[2]}.jpg')
         except:
             pass
 
-        save_image(image, tup[0], path)
+        #save_image(image, tup[0], path)
         try:
-            save_image(image_edge, tup[1], path)
+            #save_image(image_edge, tup[1], path)
+            
+            #fffffffffffffffffffffffffffff
+            #primer parametro no se toca, segundo nombre de la imagen, tercer parametro path
             save_image(image_diff, tup[2], path)
         except:
             pass
